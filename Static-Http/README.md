@@ -48,14 +48,14 @@ ETag: W/"<etag_value>"
 ETag: "<etag_value>"   
 ```
 - W/ 可选  
-'W/'(大小写敏感) 表示使用弱验证器。 弱验证器很容易生成，但不利于比较。 强验证器是比较的理想选择，但很难有效地生成。 相同资源的两个弱Etag值可能语义等同，但不是每个字节都相同。  
+    'W/'(大小写敏感) 表示使用弱验证器。 弱验证器很容易生成，但不利于比较。 强验证器是比较的理想选择，但很难有效地生成。 相同资源的两个弱Etag值可能语义等同，但不是每个字节都相同。  
 - "<etag_value>"  
-实体标签唯一地表示所请求的资源。 它们是位于双引号之间的ASCII字符串（如“675af34563dc-tr34”）。 没有明确指定生成ETag值的方法。 通常，使用内容的散列，最后修改时间戳的哈希值，或简单地使用版本号。 例如，MDN使用wiki内容的十六进制数字的哈希值。  
+    实体标签唯一地表示所请求的资源。 它们是位于双引号之间的ASCII字符串（如“675af34563dc-tr34”）。 没有明确指定生成ETag值的方法。 通常，使用内容的散列，最后修改时间戳的哈希值，或简单地使用版本号。 例如，MDN使用wiki内容的十六进制数字的哈希值。  
 #### 避免“空中碰撞”
 提交时根据请求所包含的If-Match来检查是否为最新版本。如果哈希值不匹配，则意味着文档已经被编辑，抛出412前提条件失败错误。  
 #### 缓存未更改的资源
-ETag头的另一个典型用例是缓存未更改的资源。 如果用户再次访问给定的URL（设有ETag字段），显示资源过期了且不可用，客户端就发送值为ETag的If-None-Match header字段：  
-服务器将客户端的ETag（作为If-None-Match字段的值一起发送）与其当前版本的资源的ETag进行比较，如果两个值匹配（即资源未更改），服务器将返回不带任何内容的304未修改状态，告诉客户端缓存版本可用（新鲜）。  
+    ETag头的另一个典型用例是缓存未更改的资源。 如果用户再次访问给定的URL（设有ETag字段），显示资源过期了且不可用，客户端就发送值为ETag的If-None-Match header字段：  
+    服务器将客户端的ETag（作为If-None-Match字段的值一起发送）与其当前版本的资源的ETag进行比较，如果两个值匹配（即资源未更改），服务器将返回不带任何内容的304未修改状态，告诉客户端缓存版本可用（新鲜）。  
 [详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/ETag)    
 ------
 ------
@@ -79,7 +79,39 @@ Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5
 [详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)  
 ------
 ------
-## 断电续传(206)  
+## 断点续传(206)  
 ### Range:bytes  
-### Content-Range
+    The Range 是一个请求首部，告知服务器返回文件的哪一部分。在一个  Range 首部中，可以一次性请求多个部分，服务器会以 multipart 文件的形式将其返回。如果服务器返回的是范围响应，需要使用 206 Partial Content 状态码。假如所请求的范围不合法，那么服务器会返回  416 Range Not Satisfiable 状态码，表示客户端错误。服务器允许忽略  Range  首部，从而返回整个文件，状态码用 200 。
+```
+Range: <unit>=<range-start>-  
+Range: <unit>=<range-start>-<range-end>  
+Range: <unit>=<range-start>-<range-end>, <range-start>-<range-end>  
+Range: <unit>=<range-start>-<range-end>, <range-start>-<range-end>, <range-start>-<range-end>
 
+Range: bytes=200-1000, 2000-6576, 19000-   
+```
+- <unit>  
+    范围所采用的单位，通常是字节（bytes）。  
+- <range-start>  
+    一个整数，表示在特定单位下，范围的起始值。  
+- <range-end>  
+    一个整数，表示在特定单位下，范围的结束值。这个值是可选的，如果不存在，表示此范围一直延伸到文档结束。  
+[详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Range)  
+### Content-Range  
+    在HTTP协议中，响应首部 Content-Range 显示的是一个数据片段在整个文件中的位置。  
+```
+Content-Range: <unit> <range-start>-<range-end>/<size>  
+Content-Range: <unit> <range-start>-<range-end>/*  
+Content-Range: <unit> */<size>  
+
+Content-Range: bytes 200-1000/67589 
+```
+- <unit>  
+    数据区间所采用的单位。通常是字节（byte）。  
+- <range-start>  
+    一个整数，表示在给定单位下，区间的起始值。  
+- <range-end>  
+    一个整数，表示在给定单位下，区间的结束值。  
+- <size>  
+    整个文件的大小（如果大小未知则用"*"表示）。  
+[详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Range)  
