@@ -57,6 +57,7 @@ ETag: "<etag_value>"
     ETag头的另一个典型用例是缓存未更改的资源。 如果用户再次访问给定的URL（设有ETag字段），显示资源过期了且不可用，客户端就发送值为ETag的If-None-Match header字段：  
     服务器将客户端的ETag（作为If-None-Match字段的值一起发送）与其当前版本的资源的ETag进行比较，如果两个值匹配（即资源未更改），服务器将返回不带任何内容的304未修改状态，告诉客户端缓存版本可用（新鲜）。  
 [详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/ETag)    
+  
 ------
 ------
 ## 多语言

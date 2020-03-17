@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cors</title>
+</head>
+<body>
+    ass
+    <script>
+        // 工作线程没有XMLHttpRequest  但有fetch
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', '/test', true)
+        xhr.responseType = 'json'
+        // xhr.onprogress进度条
+        xhr.onload = function() {
+            console.log(xhr.response)
+        }
+        xhr.send()
+    </script>
+</body>
+</html>
