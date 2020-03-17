@@ -70,9 +70,9 @@ Accept-Language: *
 
 Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5
 ```  
-- <language>  
+- &lt;language&gt;  
     用含有两到三个字符的字符串表示的语言码或完整的语言标签。除了语言本身之外，还会包含其他方面的信息，显示在中划线（"-"）后面。最常见的额外信息是国家或地区变种（如"en-US"）或者表示所用的字母系统（如"sr-Lat"）。其他变种诸如拼字法（"de-DE-1996"）等通常不被应用在这种场合。  
-- *  
+- \*  
     任意语言；"*" 表示通配符（wildcard）。  
 - ;q= (q-factor weighting)  
     此值代表优先顺序，用相对质量价值表示，又称为权重。  
@@ -90,11 +90,11 @@ Range: <unit>=<range-start>-<range-end>, <range-start>-<range-end>, <range-start
 
 Range: bytes=200-1000, 2000-6576, 19000-   
 ```
-- <unit>  
+- &lt;unit&gt;  
     范围所采用的单位，通常是字节（bytes）。  
-- <range-start>  
+- &lt;range-start&gt;  
     一个整数，表示在特定单位下，范围的起始值。  
-- <range-end>  
+- &lt;range-end&gt;  
     一个整数，表示在特定单位下，范围的结束值。这个值是可选的，如果不存在，表示此范围一直延伸到文档结束。  
 [详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Range)  
 ### Content-Range  
@@ -106,12 +106,12 @@ Content-Range: <unit> */<size>
 
 Content-Range: bytes 200-1000/67589 
 ```
-- <unit>  
+- &lt;unit&gt;    
     数据区间所采用的单位。通常是字节（byte）。  
-- <range-start>  
+- &lt;range-start&gt;    
     一个整数，表示在给定单位下，区间的起始值。  
-- <range-end>  
+- &lt;range-end&gt;    
     一个整数，表示在给定单位下，区间的结束值。  
-- <size>  
+- &lt;size&gt;    
     整个文件的大小（如果大小未知则用"*"表示）。  
 [详细内容](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Range)  
