@@ -8,6 +8,15 @@ const server = http.createServer()
 server.on('request', async (req, res) => {
     const {pathname} = url.parse(req.url)
 
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+    res.setHeader('Access-Control-Max-Age', 10)
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, token')
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    if(req.method === 'OPTIONS') {
+        return res.end()
+    }
+
     if(pathname === '/test') {
         return res.end(JSON.stringify({test: 'mytest'}))
     }
@@ -29,4 +38,4 @@ server.on('request', async (req, res) => {
         res.end('null')
     }
 })
-server.listen(3000)
+server.listen(4000)

@@ -11,7 +11,10 @@
     <script>
         // 工作线程没有XMLHttpRequest  但有fetch
         const xhr = new XMLHttpRequest()
-        xhr.open('GET', '/test', true)
+        document.cookie = 'test=fenglinggod'
+        xhr.withCredentials = true // cookie跨域
+        xhr.open('PUT', 'http://localhost:4000/test', true)
+        xhr.setRequestHeader('token', 1)
         xhr.responseType = 'json'
         // xhr.onprogress进度条
         xhr.onload = function() {
