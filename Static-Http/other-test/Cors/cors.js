@@ -12,6 +12,7 @@ server.on('request', async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
     res.setHeader('Access-Control-Max-Age', 10)
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, token')
+    res.setHeader("Access-Control-Expose-Headers","Content-Disposition");
     res.setHeader('Access-Control-Allow-Credentials', true)
     if(req.method === 'OPTIONS') {
         return res.end()
@@ -19,6 +20,13 @@ server.on('request', async (req, res) => {
 
     if(pathname === '/test') {
         return res.end(JSON.stringify({test: 'mytest'}))
+    }
+
+    if(pathname === '/download') {
+        res.setHeader('Content-Disposition', 'attachment;filename=abc.mp4')
+        res.setHeader('Content-Type', "video/mpeg4")
+        fs.createReadStream(path.join(__dirname, './abc.mp4')).pipe(res)
+        return
     }
 
     const absPath = path.join(__dirname, pathname)
